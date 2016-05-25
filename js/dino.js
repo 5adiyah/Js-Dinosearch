@@ -3,25 +3,10 @@ exports.Dino = function(dinoName) {
 };
 
 exports.Dino.prototype.get = function() {
-  var getDino = new XMLHttpRequest();
-  getDino.open('GET', 'https://dinoipsum.herokuapp.com/api/?format=html&words=5&paragraphs=1');
-  return getDino.send()
-  .then(getDino.responseText)
-  .then(getDino.slice(3,-5));
-  console.log(getDino);
+  $.get('https://dinoipsum.herokuapp.com/api/?format=html&words=1&paragraphs=1').then(function(response) {
+    var slicedDino = response.slice(3,-5);
+    console.log(slicedDino);
+  }).fail(function(error){
+    console.log("The dinosaur has died");
+  });
 };
-//
-// exports.Dino.prototype.getName = function() {
-//   var getDino = new Dino();
-//   var dinoName = getDino.get();
-//   var dinosaur = dinoName.slice(3,-5);
-//   return dinosaur;
-// };
-//
-//
-//
-//
-// // var getDino = new XMLHttpRequest();
-// // getDino.open('GET', 'https://dinoipsum.herokuapp.com/api/?format=html&words=5&paragraphs=1');
-// // getDino.send();
-// // return getDino;
