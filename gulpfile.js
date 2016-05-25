@@ -22,7 +22,7 @@ var lib = require('bower-files')({
 });
 
 gulp.task('jsBrowserify', function() {
-  return browserify({ entries: ['./js/main.js'] })
+  return browserify({ entries: ['./js/dino-interface.js'] })
     .bundle()
     .pipe(source('app.js'))
     .pipe(gulp.dest('./build/js'));
