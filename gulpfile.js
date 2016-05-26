@@ -8,6 +8,7 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
+    autoClose = require('browser-sync-close-hook'),
     plumber = require('gulp-plumber'); //Keeps watch going even if you make a syntax error
 var lib = require('bower-files')({
   "overrides":{
@@ -21,15 +22,15 @@ var lib = require('bower-files')({
   }
 });
 
-gulp.task('jsBrowserify', function() {
-  return browserify({ entries: ['./js/dino-interface.js'] })
+gulp.task('jsBrowserify', ['concatInterface'], function() {
+  return browserify({ entries: ['./tmp/allConcat.js'] })
     .bundle()
     .pipe(source('app.js'))
     .pipe(gulp.dest('./build/js'));
 });
 
 gulp.task('concatInterface', function() {
-  return gulp.src('js/**/*.js')
+  return gulp.src('js/**/*-interface.js')
     .pipe(concat('allConcat.js'))
     .pipe(gulp.dest('./tmp'));
 });
@@ -56,6 +57,12 @@ gulp.task('cssBuild', function() {
 });
 
 gulp.task('serve', function() {
+  browserSync.use({
+    plugin() {},
+    hooks: {
+      'client:js': autoClose, // <-- important part
+    },
+  });
   browserSync.init({
     server: {
       baseDir: "./",
@@ -100,12 +107,20 @@ gulp.task('styleBuild', function(){
   browserSync.reload();
 });
 
+gulp.task('sassBuild', ['cssBuild'], function(){
+  browserSync.reload();
+});
+
+// gulp.task('cssBuild', function(){
+//   browserSync.reload();
+// });
+
 //////// WATCH TASKS //////////
 gulp.task('watch', function(){
   gulp.watch(['js/*.js'], ['jsBuild']);
   gulp.watch(['bower.json'], ['bowerBuild']);
-  gulp.watch(["scss/*.scss"], ['cssBuild']);
-  gulp.watch(["css/*.css"], ['styleBuild']);
+  gulp.watch(["scss/*.scss"], ['sassBuild']);
+  // gulp.watch(["css/*.css"], ['styleBuild']);
   gulp.watch(["*.html"], ['htmlBuild']);
 });
 

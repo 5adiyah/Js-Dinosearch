@@ -1,18 +1,12 @@
 var Dino = require('./../js/dino.js').Dino;
+var wrongGuess = 0;
 
 var display = function(name) {
-  console.log(name + " is the name");
+  console.log("This is name in display: " + name);
   return name;
 };
 
-var splitName = function(name) {
-  var splittedName = name.split("");
-  console.log(splittedName + " is the splitted name");
-  return splittedName;
-};
-
 var jumble = function(splittedName) {
-
   var length = splittedName.length;
   for(var i = length -1; i >0; i--){
     var j = Math.floor(Math.random() * (i+1));
@@ -22,8 +16,29 @@ var jumble = function(splittedName) {
   }
   var jumbledName = splittedName.join("");
   var upperJumble = jumbledName.toUpperCase();
-  $('#dinosaur').text(upperJumble);
+  var jumble = $('#dinosaur').text(upperJumble);
+  return jumble;
 };
+
+var compare = function(name, user) {
+  if(name === user) {
+    console.log("This is name in compare: " + name);
+    console.log("This is user: " + user);
+    console.log("success");
+  } else {
+    console.log("fail");
+  }
+}
+
+var playGame = function(name) {
+  $('#check').click(function() {
+    var user = $('#userGuess').val();
+    // var name = $('#dinosaur').text();
+    console.log(user);
+    console.log(name);
+    compare(name,user);
+  });
+}
 
 
 var newDinoPic = function() {
@@ -38,14 +53,20 @@ $(document).ready(function(){
   var dino = new Dino();
   $('#dinoRando').click(function(){
     var picList = newDinoPic();
-    dino.grab(display, splitName, jumble);
+    dino.grab(display, jumble, playGame);
     $('#dinoPicture').html("<img src=/dinoPics/" + picList + ".png>");
     $('#newHide').hide();
     $('#newShow').show();
     event.preventDefault();
   });
 
-  // var jumbled = name.jumble();
-  // var sliceTheDino = getTheDino.split("");
-  // $('#dinosaur').text(dino.grab());
+  // $('#check').click(function() {
+  //   var user = $('#userGuess').val();
+  //   var name = $('#dinosaur').text();
+  //   console.log(user);
+  //   console.log(name);
+  //   compare(name,user);
+  // });
+
+
 });
