@@ -11,27 +11,34 @@
   </head>
   <body>
     <h1>DINO TIME</h1>
-    <h2 id="dinosaur"></h2>
-    <div id ="dinoPicture"></div>
-    <div id="newHide">
-      <form id = "newDino">
-        <button type="submit" id="dinoRando">GIMME A DINOSAUR</button>
-      </form>
+    <div id="all">
+      <span id="dinosaur"></span>
+      <div id ="dinoPicture"></div>
+      <div id="newHide">
+        <form id = "newDino">
+          <button type="submit" id="dinoRando">GIMME A DINOSAUR</button>
+        </form>
+      </div>
+      <div id="newShow">
+        <form id="guess">
+          <input type="text" placeholder="Unjumble the Dinosaur" id="userGuess"></input>
+          <br>
+          <button type="submit" id="check">Check My Dino</button>
+        </form>
+      </div>
     </div>
-    <div id="newShow">
-      <form id="guess">
-        <input type="text" placeholder="Unjumble the Dinosaur" id="userGuess"></input>
-        <br>
-        <button type="submit" id="check">Check My Dino</button>
-      </form>
-    </div>
+    <h2 id="wrongGuesses"></h2>
 
     <div id="guessedDino">
       <span class="answer"></span>
+      <h1>WIN!</h1>
+      <img class="bigger" src="dinoPics/giphy.gif">
     </div>
 
     <div id="deadDino">
       <span class="answer"></span>
+      <h1>Great. You killed the dinosaurs. You monster.</h1>
+      <img class="bigger" src="dinoPics/dead.png">
     </div>
   </body>
 </html>

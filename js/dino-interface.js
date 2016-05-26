@@ -2,7 +2,7 @@ var Dino = require('./../js/dino.js').Dino;
 var wrongGuess = 0;
 
 var display = function(name) {
-  console.log("This is name in display: " + name);
+  console.log(name);
   return name;
 };
 
@@ -16,31 +16,32 @@ var jumble = function(splittedName) {
   }
   var jumbledName = splittedName.join("");
   var upperJumble = jumbledName.toUpperCase();
-  var jumble = $('#dinosaur').text(upperJumble);
-  return jumble;
+  $('#dinosaur').html("<h2>TELL ME WHAT DINOSAUR THIS IS, QUICK!</h2> <br> <h1>" + upperJumble + "</h1>");
 };
-
-var compare = function(name, user) {
-  if(name === user) {
-    console.log("This is name in compare: " + name);
-    console.log("This is user: " + user);
-    console.log("success");
-  } else {
-    console.log("fail");
-  }
-}
 
 var playGame = function(name) {
   $('#check').click(function() {
     var user = $('#userGuess').val();
-    // var name = $('#dinosaur').text();
-    console.log(user);
-    console.log(name);
     compare(name,user);
+  event.preventDefault();
   });
-}
-
-
+};
+var compare = function(name, user) {
+  if(name === user) {
+    $('#guessedDino').show();
+    $('#all').hide();
+  } else {
+    wrongGuess += 1;
+    $('#wrongGuesses').text("You have " + (5 - wrongGuess) + " guesses left until a meteor hits earth and you kill this adorable dinosaur");
+    $('#wrongGuesses').show();
+      if (wrongGuess === 5) {
+        $('#deadDino').show();
+        $('#wrongGuesses').hide();
+        $('#all').hide();
+        $('#newHide').show();
+      }
+  }
+};
 var newDinoPic = function() {
   var min = 1;
   var max = 10;
@@ -59,14 +60,4 @@ $(document).ready(function(){
     $('#newShow').show();
     event.preventDefault();
   });
-
-  // $('#check').click(function() {
-  //   var user = $('#userGuess').val();
-  //   var name = $('#dinosaur').text();
-  //   console.log(user);
-  //   console.log(name);
-  //   compare(name,user);
-  // });
-
-
 });
