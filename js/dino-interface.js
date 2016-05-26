@@ -16,17 +16,35 @@ var jumble = function(splittedName) {
   var length = splittedName.length;
   for(var i = length -1; i >0; i--){
     var j = Math.floor(Math.random() * (i+1));
-    var jumbledName = splittedName[i];
+    var splitName = splittedName[i];
     splittedName[i] = splittedName[j];
-    splittedName[j] = jumbledName;
+    splittedName[j] = splitName;
   }
   var jumbledName = splittedName.join("");
-  return jumbledName;
+  var upperJumble = jumbledName.toUpperCase();
+  $('#dinosaur').text(upperJumble);
+};
+
+
+var newDinoPic = function() {
+  var min = 1;
+  var max = 10;
+
+  var picList = Math.floor(Math.random() * (max - min + 1) + min);
+  return picList;
 };
 
 $(document).ready(function(){
   var dino = new Dino();
-  dino.grab(display, splitName, jumble);
+  $('#dinoRando').click(function(){
+    var picList = newDinoPic();
+    dino.grab(display, splitName, jumble);
+    $('#dinoPicture').html("<img src=/dinoPics/" + picList + ".png>");
+    $('#newHide').hide();
+    $('#newShow').show();
+    event.preventDefault();
+  });
+
   // var jumbled = name.jumble();
   // var sliceTheDino = getTheDino.split("");
   // $('#dinosaur').text(dino.grab());
